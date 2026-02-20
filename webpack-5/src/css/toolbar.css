@@ -1,0 +1,168 @@
+#toolbar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1100;
+}
+#toolbar .hidden {
+  display: none;
+}
+
+/* A button that contains an icon via the CSS variable --icon */
+.tool-button {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* A pseudo-element that renders the icon using the background image = --icon */
+.tool-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 4px;
+  background: var(--button-color);
+  /* background-image: var(--icon); */
+  background-size: 30px 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+/* The icon — rotated using a CSS variable */
+.tool-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(var(--icon-rotation, 0deg));
+  width: 36px;
+  height: 36px;
+  background-image: var(--icon);
+  background-size: 30px 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.1s linear;
+}
+
+.tool-panel {
+  position: absolute;
+  top: 60px; /* Initial position */
+  left: 60px; /* Initial position */
+  width: 300px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.panel-header {
+  cursor: move;
+  background: #a3d9ff;
+  padding: 8px;
+  font-weight: bold;
+  user-select: none;
+  border-radius: 4px;
+}
+
+/* Overlay that dims the background */
+.info-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info-overlay.hidden {
+  display: none; /* hidden overlay + popup */
+}
+
+/* Popup box centered inside the overlay */
+.info-popup {
+  background: #fff;
+  border-radius: 6px;
+  width: 320px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 2001;
+}
+
+/* Header with dark background */
+.info-popup-header {
+  background: #333;
+  color: #fff;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Text content */
+.info-popup-content {
+  padding: 16px;
+  color: #222;
+  line-height: 1.4;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Close button at the bottom */
+.info-popup-close {
+  display: block;
+  margin: 12px auto 16px;
+  padding: 6px 16px;
+  background: #eee;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Image inside the popup */
+.popup-navigation-img {
+  display: block;
+  margin: auto;
+  width: 70%; /* adjust as needed */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* Fullscreen mode for the image */
+.popup-navigation-img.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 3001;
+}
+
+#panel-pedestrian-mode {
+  z-index: 1200;
+}
+
+.tool-instructions {
+  z-index: 1200;
+  position: relative;
+}

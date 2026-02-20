@@ -1,0 +1,31 @@
+.measure-tabs {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.measure-tabs button {
+  flex: 1;
+  padding: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.measure-tabs button.active {
+  border-bottom: 2px solid #007ACC;
+  font-weight: bold;
+}
+.measure-container {
+  padding: 8px;
+}
+.row-result {
+  margin-bottom: 10px;
+}
+
+.row-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.row-buttons .tool-button {
+  flex-shrink: 0;
+}

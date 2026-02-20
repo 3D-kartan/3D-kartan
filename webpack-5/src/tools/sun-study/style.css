@@ -1,0 +1,55 @@
+.shadow-active {
+  background-color: #4caf50 !important;
+  color: #fff !important;
+}
+  #sun-study-btn {
+  margin-top: 6px;
+  display: block;
+  padding: 6px 16px;
+  background: #eee;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* Block-layout */
+.sun-block {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titel (Month, Day, Time) */
+.sun-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Slider */
+.sun-slider {
+  width: 100%;
+  margin: 6px 0;
+  height: 6px;
+}
+
+/* Value text */
+.sun-value {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Mobil adaption */
+@media (max-width: 600px) {
+  .sun-slider {
+    height: 25px;         /* larger impact area */
+  }
+
+  .sun-slider::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  .sun-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+  }
+}

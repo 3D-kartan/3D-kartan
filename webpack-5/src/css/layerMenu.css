@@ -1,0 +1,340 @@
+/* layerMenu.css */
+
+/* Layer menu in right down corner */
+#layerMenu {
+  position: absolute;
+  /* left: 10px; */
+  right: 10px;
+  bottom: 10px;
+  z-index: 1000;
+}
+
+/* Menu button */
+#layerMenuButton {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 4px;
+  /* background: #880000cc; */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  /* background-image: var(--black-icon-layers); */
+  background-size: contain;
+}
+
+/* Make the panel a column */
+#layerMenuContent {
+  position: absolute;
+  bottom: 0;
+  /* left: 0; */
+  right: 0;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  padding: 8px;
+  z-index: 1100;
+}
+
+#layerMenu.open #layerMenuContent {
+  display: flex;
+}
+
+/* Footer-wrapper: a horizontal row */
+#layerMenuFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* round close btn */
+#layerMenuClose {
+  width: 30px;
+  height: 30px;
+  border: none;
+  /* border-radius: 50%; */
+  background: transparent;
+  background-image: var(--black-icon-close);
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 30px;
+  padding: 0;
+}
+
+/* Background Buttons */
+#backgroundButtons {
+  display: grid;
+  grid-template-columns: repeat(7, 30px);
+  gap: 8px;
+}
+
+/* Hides all icon buttons beyond the first 14 */
+#backgroundButtons .icon-button:nth-child(n+15) {
+  display: none;
+}
+
+.icon-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+.icon-button.active {
+  outline: 2px solid #0066cc;
+  width: 28px;
+  height: 28px;
+}
+
+/* Main-group-container */
+#tilesetGroups {
+  max-height: 60vh;
+  max-width: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Group container */
+#tilesetGroups .group {
+  margin-bottom: 8px;
+}
+
+/* Group heading */
+#tilesetGroups .group-header {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: #eee;
+  padding: 4px 8px;
+  cursor: pointer;
+  /* font-weight: bold; */
+  border-radius: 4px;
+  max-width: calc(100% - 22px);
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  flex: 1;
+}
+
+/* Content in group (layers and possible subgroups) */
+#tilesetGroups .group-content {
+  display: none;
+  margin: 4px 0 0 12px;
+}
+#tilesetGroups .group-content.open {
+  display: block;
+}
+
+/* Group header becomes row */
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+/* Only subgroups get this checkbox */
+.group-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* The title of the group */
+.group-label {
+  cursor: pointer;
+  user-select: none;
+  flex: 1;
+}
+
+/* === Tileset rows and panels === */
+
+/* Item = wrapper for row + panel */
+#tilesetGroups .tileset-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+/* The row with checkbox, label and buttons */
+#tilesetGroups .tileset-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+#tilesetGroups .tileset-row label {
+  max-width: calc(100% - 22px);
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  flex: 1;
+  font-size: 14px;
+}
+
+.tileset-checkbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.zoom-button {
+  width: 26px;
+  height: 26px;
+  margin-left: auto;
+  border: none;
+  background-color: transparent;
+  margin-right: 10px;
+  background-image: var(--black-icon-zoom-in);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  padding: 0;
+}
+
+.more-button {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin-left: auto;
+  background-image: var(--black-icon-more);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Info panel under the row */
+.info-panel {
+  display: none;
+  margin-left: 22px;
+  margin-top: 4px;
+  padding: 8px;
+  background: #fafafa;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.info-panel.open {
+  display: block;
+}
+
+/* Text styling inside the panel */
+.info-panel p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Slider and label */
+.info-panel label {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.info-panel input[type="range"] {
+  width: 100%;
+}
+
+/* ========= Search function ========= */
+/* Ensure the search wrapper is the reference for absolute positioning */
+.tileset-search {
+  position: relative;
+  margin: 8px 0;
+}
+
+.tileset-search input[type="text"] {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Floating results above the input */
+.tileset-search .search-results {
+  position: absolute;
+  bottom: calc(100% + 4px);  /* place just above the search field + 4px spacing */
+  left: 0;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  background: #2e2e2e;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1000;             /* ensure it appears above the menu */
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style each search result item */
+.tileset-search .search-result {
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.tileset-search .search-result:hover {
+  background: #4a4a4a;
+}
+
+/* Icon for WMS layers in the row */
+.tileset-row .wms-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-right: 6px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+
+  /* Only subgroups get this checkbox */
+  .group-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .tileset-checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .zoom-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .more-button {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+  }
+
+}
+

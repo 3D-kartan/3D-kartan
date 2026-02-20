@@ -1,0 +1,6 @@
+Third-Party Notices
+-------------------
+
+This application uses CesiumJS (https://cesium.com).
+CesiumJS is licensed under the Apache License 2.0.
+Full license text is available in ./licenses/CESIUM_LICENSE.txt.

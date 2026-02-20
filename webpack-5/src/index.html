@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/x-icon" href="./images/icons/3dkartan-favicon-compressed.png">
+    <style>
+      body, html { margin:0; padding:0; height:100%; }
+      #toolbar { position: absolute; top: 10px; left: 10px; z-index: 1; }
+      #toolbar button.active { font-weight: bold; }
+      #cesiumContainer { width:100%; height:100%; }
+    </style>
+  </head>
+  <body>
+<div id="layerMenu">
+  <button id="layerMenuButton" class="tool-button" ></button>
+  <div id="layerMenuContent">
+    <!-- 1) Layer Groups -->
+    <div id="tilesetGroups"></div>
+    <!-- 2) Footer, background btn, close  btn -->
+    <div id="layerMenuFooter">
+      <div id="backgroundButtons"></div>
+      <button id="layerMenuClose"></button>
+    </div>
+  </div>
+</div>
+<div id="cesiumContainer"></div>
+<div id="toolbar"></div>
+</body>
+</html>

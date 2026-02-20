@@ -1,0 +1,323 @@
+/* Bottom-left wrapper */
+#bottomLeftMenu {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 1200;
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+
+/* Project menu box */
+#projectMenuBox {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  padding: 10px 10px 40px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 250px;
+  max-width: 300px;
+}
+
+.project-row {
+  padding: 5px 10px;
+  width: auto;
+}
+
+.project-row:hover {
+  background-color: #ebebeb;
+  cursor: pointer;
+}
+
+.project-row-title {
+  white-space: normal;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+}
+
+#projectMenuCloseBtn {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+#projectMenuTogglePinsBtn {
+  position: absolute;
+  bottom: 8px;
+  left: 40px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+#projectMenuCloseBtn::before,
+#projectMenuTogglePinsBtn::before {
+  box-shadow: none;
+}
+
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+
+/* Sidebar */
+
+.project-layers.minimized {
+  display: none;
+}
+/* When minimized, CSS hides the content (we rely on the .minimized class) */
+
+.project-layer-info {
+  display: none;
+}
+
+.project-sidebar {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background: #fff;
+  padding: 12px;
+  transition: width 220ms ease, transform 220ms ease, opacity 180ms ease;
+  will-change: transform, opacity;
+  position: absolute;
+  z-index: 2200;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.project-sidebar.minimized {
+  bottom: auto;        /* release bottom anchor */
+  /* alternatively: top: auto; choose ONE anchor to release */
+  height: auto;        /* now it can shrink to its content */
+  max-height: none;    /* optional, if you don't want limits */
+  overflow: visible;   /* don't hide internal scroll when minimized */
+}
+
+/* Hide inner content and top controls when minimized */
+.project-sidebar.minimized .project-description {
+  display: none;
+  pointer-events: none;
+  transform: translateX(-8px);
+}
+
+.project-sidebar.project-layers.minimized {
+  height: auto;
+  bottom: auto;
+}
+
+/* Top right buttons */
+.project-sidebar .project-sidebar-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.project-sidebar .project-sidebar-zoom {
+  position: absolute;
+  top: 10px;
+  right: 56px;
+  z-index: 1000;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.project-sidebar .project-sidebar-collapse {
+  position: absolute;
+  top: 10px;
+  right: 102px;
+  z-index: 1000;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Content area */
+.project-sidebar .project-sidebar-content {
+  transition: opacity 180ms ease, transform 180ms ease;
+  opacity: 1;
+  transform: translateX(0);
+  padding-top: 12px;
+}
+
+/* Layer rows */
+.project-layer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed #eee;
+}
+
+.project-layer-name {
+  cursor: pointer;
+}
+
+/* Layer info */
+.project-layer-info {
+  margin: 8px 0 12px 0;
+  border-bottom: 1px solid #f4f4f4;
+  color: #444;
+  font-size: 13px;
+}
+
+/* Description */
+.project-description {
+  margin-top: 12px;
+  color: #444;
+  font-size: 14px;
+  line-height: 1.3;
+  overflow-y: auto;
+}
+
+/* Minimize handle (sibling to sidebar). JS manages positioning, basic style here */
+.project-sidebar-minimize {
+  display: none; /* JS will show/hide */
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: var(--sidebar-bg, #fff);
+  border: none;
+  cursor: pointer;
+  background-image: var(--icon);
+  background-repeat: no-repeat;
+  background-position: center;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 4000;
+  transition: none;
+}
+
+
+/* Accessibility focus */
+
+
+/* Allows each layer item to contain an info panel below it */
+.project-layer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed #eee;
+  flex-wrap: wrap;
+}
+
+/* Info panel under each layer */
+.project-layer-row .project-layer-info {
+  flex-basis: 100%;
+  padding: 6px 0 10px 0;
+  border: none;
+  border-top: 1px solid #f5f5f5;
+  color: #444;
+  font-size: 13px;
+  margin-top: 4px;
+  display: none; /* shown when clicking the layer name */
+}
+
+.project-layer-row .project-layer-info input[type="range"] {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.project-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 8px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Title + Layers should not scroll */
+.project-sidebar-title,
+.project-layers {
+  flex: 0 0 auto; /* only take the height needed */
+  white-space: normal;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+}
+
+/* Description scrolls */
+.project-description {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-left: 5px;
+  scroll-behavior: smooth;
+}
+
+img {
+  max-width: 100%;
+}
+
+.project-menu-header {
+  font-size: large;
+  font-weight: bold;
+}
+
+.project-sidebar .project-sidebar-text-minimize {
+  pointer-events: auto;
+  font-size: 18px;
+  background: #fff;
+  border-radius: 6px;
+  padding-top: 2px;
+  border: 1px solid #ccc;
+  padding-bottom: 2px;
+  margin-top: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Hide tool-button box shadow */
+.tool-button.project-sidebar-collapse::before,
+.tool-button.project-sidebar-close::before,
+.tool-button.project-sidebar-zoom::before {
+  box-shadow: none;
+}
+
+@media (max-width: 700px) {
+  .project-sidebar {
+    width: calc(100% - 24px);
+  }
+
+  .project-sidebar .project-sidebar-text-minimize {
+    pointer-events: auto;
+    font-size: 18px;
+    background: #fff;
+    border-radius: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+}

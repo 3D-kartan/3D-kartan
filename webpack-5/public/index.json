@@ -1,0 +1,222 @@
+
+  {
+   "camera": [
+    {
+      "startExtent": [
+        15.671103064362,
+        60.21484248223163,
+        16.312895699095435,
+        59.91045413122643
+      ]
+    },
+    {
+      "minimumZoomDistance": 1,
+      "maximumZoomDistance": 60000
+    }
+  ],
+    "proj4Defs": [
+    {
+      "code":      "EPSG:4326",
+      "alias":     "urn:ogc:def:crs:EPSG::4326",
+      "projection": "+proj=longlat +datum=WGS84 +no_defs",
+      "label":    "WGS 84 (lat/lon)"
+    },
+    {
+      "code":      "EPSG:3010",
+      "alias":     "urn:ogc:def:crs:EPSG::3010",
+      "projection": "+proj=tmerc +lat_0=0 +lon_0=16.5 +k=1 +x_0=150000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
+      "label": "SWEREF 99 16 30"
+    },
+    {
+      "code":      "EPSG:3006",
+      "alias":     "urn:ogc:def:crs:EPSG::3006",
+      "projection": "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs",
+      "label": "SWEREF 99 TM" 
+    }
+  ],
+  "searchbar" : [ 
+    { 
+      "active" : false
+    } 
+  ],
+  "ionId": [
+    {
+      "useIonId": false,
+      "id": "YOUR_ION_ID"
+    }
+  ],
+  "terrain": [
+    {
+      "terrainType": "world"  
+    }
+  ],
+  "toolbar": [
+  {
+    "toolName":   "info",
+    "toolTip":    "Information",
+    "iconVar":    "--black-icon-info",
+    "actionType": "popup",
+    "showNavigationImg": true,
+    "popupText":  "Höjderna i modellen är indikativa eftersom terrängen är något förenklad och bör inte användas i beslut där hög noggranhet krävs. Har du ett ärende som kräver höjdberäkning med hög noggranhet? Kontaka Kart & Mät på enhetsmailen@exempel.se",
+    "active":     true
+  },
+  {
+    "toolName": "find-north",
+    "toolTip": "Hitta norr",
+    "iconVar": "--black-icon-navigation",
+    "actionType": "rotateNorth",
+    "active": true
+  },
+  {
+    "toolName": "zoom-in",
+    "toolTip": "Zooma in",
+    "iconVar": "--black-icon-add",
+    "actionType": "zoomIn",
+    "active": true
+  },
+  {
+    "toolName": "zoom-out",
+    "toolTip": "Zooma ut",
+    "iconVar": "--black-icon-remove",
+    "actionType": "zoomOut",
+    "active": true
+  },
+  {
+    "toolName": "home",
+    "toolTip": "Zooma till startvy",
+    "iconVar": "--black-icon-home",
+    "actionType": "goHome",
+    "active": true
+  },
+  {
+    "toolName": "sun-study",
+    "toolTip": "Solstudie",
+    "iconVar":"--black-icon-sun",
+    "active": true
+  },
+  {
+    "toolName": "pedestrian-mode",
+    "toolTip": "Fotgängarläge",
+    "iconVar":"--black-icon-pedestrian",
+    "active": true
+  },
+  { 
+    "toolName": "hide-buildings", 
+    "toolTip": "Göm byggnader", 
+    "iconVar":"--black-icon-visibility-off", 
+    "active": true
+  },
+  { 
+    "toolName": "draw-3d", 
+    "toolTip": "Rita 3D-polygoner", 
+    "iconVar":"--black-icon-cube", 
+    "active": true
+  },
+  {
+    "toolName":   "measure",
+    "toolTip":    "Mät längd, area & distans",
+    "iconVar":    "--black-icon-measure",
+    "actionType": "measure",
+    "active":     true
+  },
+  {
+    "toolName":   "placement",
+    "toolTip":    "Placera 3D-modeller",
+    "iconVar":    "--black-icon-place-model",
+    "actionType": "panel",
+    "active":     false
+  },
+  {
+    "toolName":   "terrain-section",
+    "toolTip":    "Rita terrängprofil",
+    "iconVar":    "--black-icon-landscape",
+    "actionType": "panel",
+    "active":     true
+  }
+  ],
+  "projects" : [
+    {
+      "name": "Projekt exempel Avesta",
+      "html-description": "<p>Här är en bild:</p><img src=\"./projects/project_1/img/exempelbild.png\" alt=\"Beskrivning\" >",
+      "start-location": {
+        "position": {
+          "lng": 16.166,
+          "lat": 60.128,
+          "height": 5000
+        },
+        "orientation": {
+          "heading": 0,
+          "pitch": -45,
+          "roll": 0
+        }
+      },
+      "pin": { 
+          "lng": 16.166,
+          "lat": 60.128,
+          "height": 5000
+      }
+    }
+  ],
+  "backgroundLayers": [
+    {
+      "name": "OpenStreetMap",
+      "type": "OSM",
+      "primary": true,
+      "style": "osm"
+    }
+  ],
+  "groups": [
+    {
+      "name": "Buildings",
+      "title": "Byggnader",
+      "groups": [
+        {
+          "name": "avesta",
+          "title": "Avesta nedtonad"
+        },
+        {
+          "name": "avesta_textur",
+          "title": "Avesta textur"
+        },
+        {
+          "name": "norberg",
+          "title": "Norberg nedtonad"
+        },
+        {
+          "name": "norberg_textur",
+          "title": "Norberg textur"
+        },
+        {
+          "name": "fagersta",
+          "title": "Fagersta nedtonad"
+        },
+        {
+          "name": "fagersta_textur",
+          "title": "Fagersta textur"
+        }
+      ]
+    },
+    {
+      "name": "WMS",
+      "title": "Kartlager"
+    }
+  ],
+  "styles": [
+    {
+      "name": "orto_farg",
+      "img": "orto_farg.png"
+    },
+    {
+      "name": "karta_farg",
+      "img": "karta_farg.png"
+    },
+    {
+      "name": "karta_gra",
+      "img": "karta_gra.png"
+    },
+    {
+      "name": "osm",
+      "img": "osm.png"
+    }
+  ]
+}

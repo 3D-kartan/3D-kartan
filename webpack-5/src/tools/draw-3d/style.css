@@ -1,0 +1,17 @@
+.row-input {
+  margin-bottom: 10px;
+}
+
+.row-buttons {
+  display: flex;
+  gap: 6px;         /* distance between btns */
+  margin-top: 5px;
+}
+
+.row-buttons .tool-button {
+  flex-shrink: 0;   /* btns should not shrink if panel is narrow*/
+}
+
+#panel-draw-3d .row-input {
+    margin-top: 5px;
+}

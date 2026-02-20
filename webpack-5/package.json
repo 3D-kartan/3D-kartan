@@ -1,0 +1,41 @@
+{
+  "name": "3d-kartan",
+  "version": "1.0.0",
+  "description": "A 3D map application, aimed to display 3D data in an easy to understand way. This application is built with Webpack-5 and uses Cesium JS in the background to display the globe and its content. Cesium JS is developed under the Apache-2.0 license and no modifications has been done to the core of Cesium JS.",
+  "license": "Apache-2.0",
+  "private": true,
+  "author": {
+    "name": "Albin Näslund",
+    "url": "https://github.com/avalna"
+  },
+  "keywords": [
+    "cesium",
+    "CesiumJS",
+    "webpack",
+    "3D-kartan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3D-kartan"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack serve --config webpack.config.js",
+    "start:built": "npx http-server -a localhost -p 8080 dist/"
+  },
+  "dependencies": {
+    "cesium": "^1.114.0",
+    "chart.js": "^4.5.1",
+    "proj4": "^2.19.10"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^9.1.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.15.1"
+  }
+}

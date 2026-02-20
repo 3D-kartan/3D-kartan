@@ -1,0 +1,55 @@
+.row-result {
+  margin-bottom: 10px;
+}
+
+.row-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.row-buttons button {
+  flex-shrink: 0;
+}
+
+/* Slider‐format */
+.rotate-value {
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+.edit-section input[type="range"] {
+  vertical-align: middle;
+}
+
+.row-result input[type="range"] {
+  vertical-align: middle;
+}
+
+#panel-placement .row-result {
+  margin-top: 5px;
+}
+
+#panel-placement .row-result select {
+  padding: 5px;
+}
+
+
+#panel-placement .selected-label {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#panel-placement .edit-section button {
+  margin-right: 5px;
+}
+
+#panel-placement .panel-body button{
+  margin-top: 6px;
+  padding: 6px 6px;
+  display: block;
+  background: #eee;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+}

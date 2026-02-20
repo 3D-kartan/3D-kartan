@@ -1,0 +1,67 @@
+#coordCopyMenu {
+  position: absolute;
+  background: #FFFFFF;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 0;
+  z-index: 99999;
+  min-width: 260px;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#coordCopyMenu.hidden {
+  display: none;
+}
+
+.coord-copy-header {
+  font-weight: bold;
+  padding: 6px 12px;
+  border-bottom: 1px solid #444;
+}
+
+.coord-copy-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.coord-copy-item {
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.coord-copy-item:hover {
+  background: #e6e6e6;
+}
+
+/* Toast */
+#coordCopyToast {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFFFFF;
+  color: #000000;
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: none;
+  opacity: 0;
+  pointer-events: none; /* <-- does not block clicks when hidden */
+  transition: opacity 0.3s ease;
+  z-index: 999999;
+  display: block; /* <-- always block so fade animation works */
+}
+
+#coordCopyToast.visible {
+  opacity: 1;
+  pointer-events: auto; /* <-- can be clicked if needed */
+}
+
+#coordCopyToast.hidden {
+  opacity: 0;
+  pointer-events: none; /* <-- captures no clicks */
+}
+
+
