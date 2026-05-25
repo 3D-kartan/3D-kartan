@@ -20,22 +20,26 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack serve --config webpack.config.js",
-    "start:built": "npx http-server -a localhost -p 8080 dist/"
+    "build": "webpack --mode production --config webpack.config.js",
+    "start": "webpack serve --mode development --config webpack.config.js --port 4000",
+    "start:built": "npx http-server -a localhost -p 4000 dist/"
   },
   "dependencies": {
-    "cesium": "^1.114.0",
+    "@formio/js": "^5.3.1",
+    "bootstrap": "^5.3.8",
+    "cesium": "^1.141.0",
     "chart.js": "^4.5.1",
     "proj4": "^2.19.10"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^9.1.0",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.6.0",
+    "postcss-loader": "^8.2.1",
+    "postcss-prefix-selector": "^2.1.1",
     "style-loader": "^3.3.3",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.15.1"
+    "webpack": "^5.107.1",
+    "webpack-cli": "^7.0.2",
+    "webpack-dev-server": "^5.2.4"
   }
 }

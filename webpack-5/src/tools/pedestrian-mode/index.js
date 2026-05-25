@@ -43,6 +43,12 @@ export default function initPedestrianMode(panel, viewer) {
   panel.appendChild(body);
 
   // ------------------------------------------------------------
+  // Root tool panel
+  // ------------------------------------------------------------
+  const rootToolPanel = document.getElementById("panel-pedestrian-mode");
+
+
+  // ------------------------------------------------------------
   // Eye height input
   // ------------------------------------------------------------
   let pedestrianHeight = 1.75;
@@ -92,19 +98,6 @@ export default function initPedestrianMode(panel, viewer) {
   });
 
   // ------------------------------------------------------------
-  // Instruction text
-  // ------------------------------------------------------------
-  const info = document.createElement("div");
-  info.className = "tool-instructions";
-  info.style.textAlign = "center";
-  info.style.marginBottom = "8px";
-  info.innerHTML =
-    "Zooma in och klicka på marken där du vill placera dig. " +
-    "Använd Shift + drag för att vrida huvudet eller pilarna. " +
-    "Ange din ögonhöjd ovan innan du klickar.";
-  body.appendChild(info);
-
-  // ------------------------------------------------------------
   // Exit button
   // ------------------------------------------------------------
   const exitBtn = document.createElement("button");
@@ -121,7 +114,7 @@ export default function initPedestrianMode(panel, viewer) {
   rotateLeftBtn.id = "rotateLeftBtn";
   rotateLeftBtn.title = "Rotera vänster";
   rotateLeftBtn.style.setProperty("--icon", "var(--black-icon-arrow-left)");
-  body.appendChild(rotateLeftBtn);
+  rootToolPanel.appendChild(rotateLeftBtn);
 
   // ------------------------------------------------------------
   // Rotate right button
@@ -131,7 +124,7 @@ export default function initPedestrianMode(panel, viewer) {
   rotateRightBtn.id = "rotateRightBtn";
   rotateRightBtn.title = "Rotera höger";
   rotateRightBtn.style.setProperty("--icon", "var(--black-icon-arrow-right)");
-  body.appendChild(rotateRightBtn);
+  rootToolPanel.appendChild(rotateRightBtn);
 
   // ------------------------------------------------------------
   // Internal state
@@ -197,15 +190,19 @@ export default function initPedestrianMode(panel, viewer) {
   // ------------------------------------------------------------
   // Enter pedestrian mode
   // ------------------------------------------------------------
+  function setDisplay(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = value;
+  }
   function enter() {
     if (isActive) return;
     isActive = true;
-
+    
     // Hide UI for immersive mode
-    document.getElementById("toolbar").style.display = "none";
-    document.getElementById("searchBarContainer").style.display = "none";
-    document.getElementById("topRightMenu").style.display = "none";
-    document.getElementById("layerMenu").style.display = "none";
+    setDisplay("toolbar", "none");
+    setDisplay("searchBarContainer", "none"); // will do nothing if not configured
+    setDisplay("topRightMenu", "none");
+    setDisplay("layerMenu", "none");
 
     const bottomLeftMenu = document.getElementById("bottomLeftMenu");
     if (bottomLeftMenu) bottomLeftMenu.style.display = "none";
@@ -238,12 +235,12 @@ export default function initPedestrianMode(panel, viewer) {
   function exit() {
     if (!isActive) return;
     isActive = false;
-
-    // Restore UI
-    document.getElementById("toolbar").style.display = "";
-    document.getElementById("searchBarContainer").style.display = "flex";
-    document.getElementById("topRightMenu").style.display = "";
-    document.getElementById("layerMenu").style.display = "";
+    
+    // Restore UI (revert to CSS defaults)
+      setDisplay("toolbar", "");
+      setDisplay("searchBarContainer", "flex"); // safe even if missing
+      setDisplay("topRightMenu", "");
+      setDisplay("layerMenu", "");
 
     const bottomLeftMenu = document.getElementById("bottomLeftMenu");
     if (bottomLeftMenu) bottomLeftMenu.style.display = "";

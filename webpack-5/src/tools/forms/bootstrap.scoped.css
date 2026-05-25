@@ -1,0 +1,2 @@
+/* Import bootstrap via css-loader */
+@import "bootstrap/dist/css/bootstrap.min.css";

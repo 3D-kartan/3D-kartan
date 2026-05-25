@@ -1,6 +1,7 @@
-.shadow-active {
-  background-color: #4caf50 !important;
-  color: #fff !important;
+#tool-btn-sun-study.shadow-active::before {
+  border: 2px solid #2196F3;
+  box-sizing: border-box;
+  border-radius: 4px;
 }
   #sun-study-btn {
   margin-top: 6px;
@@ -53,3 +54,16 @@
     height: 28px;
   }
 }
+.sun-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 12px 0;
+}
+
+.sun-toggle-label {
+  font-weight: 600;
+  min-width: 70px;
+}
+
+/* Slider and Switch code are used from menu.css */

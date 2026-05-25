@@ -72,35 +72,6 @@ export default function initTerrainSection(panel, viewer, proj4Defs) {
   btn.textContent = "Aktivera";
   body.appendChild(btn);
 
-  // Info button + tooltip explaining workflow
-  const infoBtn = document.createElement("button");
-  infoBtn.id = "terrain-section-infoBtn";
-  infoBtn.className = "tool-button";
-  infoBtn.style.setProperty("--icon", "var(--black-icon-info)");
-  body.appendChild(infoBtn);
-
-  const infoTooltip = document.createElement("div");
-  infoTooltip.id = "terrain-section-infoTooltip";
-  infoTooltip.innerHTML =
-    "1. Välj metod för punktplacering <br> 2. Specificera antal punkter eller punktmellanrum <br>3. Tryck Aktivera och placera ut två punkter <br>4. Har flera grafer ritats kan man välja graf att visa under Graf-index <br> 5. Grafer går att radera <br>6. Vid export, exporteras vald graf i Graf-index <br><br>Noggrannheten beror på terrängens detaljnivå, kamerans zoom och att terrängen hunnit laddas färdigt innan mätning.";
-  infoTooltip.style.display = "none";
-  body.appendChild(infoTooltip);
-
-  infoBtn.addEventListener("mouseenter", () => {
-    infoTooltip.style.display = "block";
-    // small delay for fade-in
-    requestAnimationFrame(() => {
-      infoTooltip.style.opacity = "1";
-    });
-  });
-
-  infoBtn.addEventListener("mouseleave", () => {
-    infoTooltip.style.opacity = "0";
-    setTimeout(() => {
-      infoTooltip.style.display = "none";
-    }, 150);
-  });
-
   // ─────────────────────────────────────────────────────────────
   // Sampling mode: equidistant vs spacing
   // ─────────────────────────────────────────────────────────────
@@ -302,10 +273,10 @@ export default function initTerrainSection(panel, viewer, proj4Defs) {
   // ─────────────────────────────────────────────────────────────
   const graphContainer = document.createElement("div");
   graphContainer.style.position = "relative";
-  graphContainer.style.width = "100%";
+  graphContainer.style.width = "auto";
   graphContainer.style.height = "220px";
   graphContainer.style.border = "1px solid #444";
-  graphContainer.style.marginTop = "10px";
+  graphContainer.style.margin = "10px";
   body.appendChild(graphContainer);
 
   // ─────────────────────────────────────────────────────────────
@@ -963,7 +934,7 @@ export default function initTerrainSection(panel, viewer, proj4Defs) {
 
   // Stop the tool automatically if the panel is hidden
   const mo = new MutationObserver(() => {
-    if (panel.style.display !== "block" && active) {
+    if (getComputedStyle(panel).display === "none" && active) {
       stopTerrainTool();
     }
   });

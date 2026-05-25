@@ -4,6 +4,7 @@
 import { takeScreenshot } from "./menuFunctions/print/print.js";
 import { initCoordinates } from "./menuFunctions/coordinates/coordinates.js";
 import { shareView } from "./menuFunctions/shareMap/shareMap.js";
+import { initPicking } from "./menuFunctions/picking/picking.js";
 
 /**
  * Initializes the top‑right menu UI.
@@ -60,7 +61,8 @@ export default function initMenuUI(viewer, config) {
   const rows = [
     { icon: "--black-icon-share", text: "Dela karta",     id: "shareMapBtn" },
     { icon: "--black-icon-print", text: "Ta skärmklipp",  id: "screenshotBtn" },
-    { icon: "--black-icon-gps",   text: "Visa koordinater", id: "coordRow", hasSwitch: true }
+    { icon: "--black-icon-gps",   text: "Visa koordinater", id: "coordRow", hasSwitch: true },
+    { icon: "--black-icon-arrow-selector-tool", text: "Visa selektering", id: "pickingRow", hasSwitch: true }
   ];
 
   // Hide coordinate row on mobile
@@ -83,7 +85,7 @@ export default function initMenuUI(viewer, config) {
       <span class="menu-label">${row.text}</span>
       ${row.hasSwitch ? `
         <label class="switch">
-          <input type="checkbox" id="coordCheckbox">
+          <input type="checkbox" id="${row.id}Checkbox">
           <span class="slider"></span>
         </label>
       ` : ""}
@@ -126,7 +128,7 @@ export default function initMenuUI(viewer, config) {
   if (!isMobile) {
     let teardownCoords = null;
 
-    document.getElementById("coordCheckbox")
+    document.getElementById("coordRowCheckbox")
       .addEventListener("change", e => {
         if (e.target.checked) {
           // Start coordinate display tool
@@ -138,4 +140,15 @@ export default function initMenuUI(viewer, config) {
         }
       });
   }
+  let teardownPicking = null;
+
+document.getElementById("pickingRowCheckbox")
+  .addEventListener("change", (e) => {
+    if (e.target.checked) {
+      teardownPicking = initPicking(viewer);
+    } else if (teardownPicking) {
+      teardownPicking();
+      teardownPicking = null;
+    }
+  });
 }

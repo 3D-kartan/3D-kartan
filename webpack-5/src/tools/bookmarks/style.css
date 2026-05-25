@@ -1,0 +1,26 @@
+.bookmark-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between buttons */
+  width: 100%;
+}
+
+.bookmark-item {
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.bookmark-item:hover {
+  background: #eaeaea;
+}
+
+#panel-bookmarks .tool-instructions {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

@@ -12,6 +12,7 @@
  *   import { zoomIn, zoomOut, goHome, flyZoomIn } from "./zoom-in-out-home";
  */
 
+import { Matrix4, Cartesian3 } from "cesium";
 /**
  * Computes an adaptive zoom step based on current camera height.
  *
@@ -39,7 +40,50 @@ function computeStep(
 
   return Math.min(capped, allowed);
 }
+function isTransformedCamera(camera) {
+  return !Matrix4.equals(camera.transform, Matrix4.IDENTITY);
+}
 
+function getCameraWorldHeight(viewer) {
+  const camera = viewer.camera;
+  const ellipsoid = viewer.scene.globe.ellipsoid;
+
+  // positionWC = world coordinates, works even if the camera has a transform
+  const carto =
+    camera.positionCartographic ??
+    ellipsoid.cartesianToCartographic(camera.positionWC);
+
+  return carto?.height ?? 0;
+}
+
+function getLockedCameraRange(viewer) {
+  // When lookAtTransform is used, camera.position is a local offset from the target
+  return Cartesian3.magnitude(viewer.camera.position);
+}
+
+function setLockedCameraRange(viewer, newRange) {
+  const camera = viewer.camera;
+
+  const currentOffset = camera.position;
+  const currentRange = Cartesian3.magnitude(currentOffset);
+
+  if (!Number.isFinite(currentRange) || currentRange <= 0.001) return false;
+  if (!Number.isFinite(newRange) || newRange <= 0.001) return false;
+
+  const scale = newRange / currentRange;
+
+  const newOffset = Cartesian3.multiplyByScalar(
+    currentOffset,
+    scale,
+    new Cartesian3()
+  );
+
+  // Keep the same target + same direction, only change the distance
+  camera.lookAtTransform(camera.transform, newOffset);
+  viewer.scene.requestRender?.();
+
+  return true;
+}
 /**
  * Adaptive instant zoom-in.
  * Uses camera.zoomIn(step) for immediate movement (no animation).
@@ -49,14 +93,31 @@ function computeStep(
  */
 export function zoomIn(viewer, opts = {}) {
   const camera = viewer.camera;
-  const ellipsoid = viewer.scene.globe.ellipsoid;
 
-  const carto = ellipsoid.cartesianToCartographic(camera.position);
-  const height = carto.height;
+  // LOCKED CAMERA MODE:
+  // Zoom by decreasing the distance to the target/pin
+  if (isTransformedCamera(camera)) {
+    const range = getLockedCameraRange(viewer);
+    const minRange = opts.minRange ?? opts.minHeight ?? 250;
 
+    if (range <= minRange) return;
+
+    const step = computeStep(range, {
+      ...opts,
+      minHeight: minRange
+    });
+
+    if (step <= 0) return;
+
+    const newRange = Math.max(minRange, range - step);
+    setLockedCameraRange(viewer, newRange);
+    return;
+  }
+
+  // NORMAL MODE:
+  const height = getCameraWorldHeight(viewer);
   const { minHeight = 250 } = opts;
 
-  // Prevent zooming below minHeight
   if (height <= minHeight) return;
 
   const step = computeStep(height, { ...opts, minHeight });
@@ -74,12 +135,25 @@ export function zoomIn(viewer, opts = {}) {
  */
 export function zoomOut(viewer, opts = {}) {
   const camera = viewer.camera;
-  const ellipsoid = viewer.scene.globe.ellipsoid;
 
-  const carto = ellipsoid.cartesianToCartographic(camera.position);
-  const height = carto.height;
+  // LOCKED CAMERA MODE:
+  // Zoom by increasing the distance to the target/pin
+  if (isTransformedCamera(camera)) {
+    const range = getLockedCameraRange(viewer);
 
-  // Step grows with height, but is clamped
+    const step = Math.min(
+      opts.maxStep ?? 1e6,
+      Math.max(opts.minStep ?? 50, range * (opts.scale ?? 0.2))
+    );
+
+    const newRange = range + step;
+    setLockedCameraRange(viewer, newRange);
+    return;
+  }
+
+  // NORMAL MODE:
+  const height = getCameraWorldHeight(viewer);
+
   const step = Math.min(
     opts.maxStep ?? 1e6,
     Math.max(opts.minStep ?? 50, height * (opts.scale ?? 0.2))
@@ -87,78 +161,26 @@ export function zoomOut(viewer, opts = {}) {
 
   camera.zoomOut(step);
 }
-
 /**
  * Smoothly flies the camera back to Cesium's default home position.
  *
  * @param {Viewer} viewer
  * @param {Number} duration Animation duration in seconds
  */
-export function goHome(viewer, duration = 1.5) {
+export async function goHome(viewer, duration = 1.5, opts = {}) {
+  const { closeProjectFirst = true } = opts;
+
+  // Cancel any ongoing camera flight first
+  viewer.camera.cancelFlight?.();
+
+  if (closeProjectFirst) {
+    const closeFn = viewer?.__projectMenuApi?.closeProjectSidebar;
+
+    if (typeof closeFn === "function") {
+      await Promise.resolve(closeFn());
+    }
+  }
+
   viewer.camera.flyHome(duration);
 }
 
-/**
- * Smooth animated zoom-in.
- *
- * Instead of using camera.zoomIn(), this function:
- *  - Computes a new target height
- *  - Converts it to Cartesian3
- *  - Uses camera.flyTo() for a smooth animation
- *
- * This gives a more polished UX for UI buttons.
- *
- * @param {Viewer} viewer
- * @param {Object} opts { scale, minStep, minHeight, maxStep, duration }
- */
-export function flyZoomIn(viewer, opts = {}) {
-  const camera = viewer.camera;
-  const scene = viewer.scene;
-  const ellipsoid = scene.globe.ellipsoid;
-
-  const carto = ellipsoid.cartesianToCartographic(camera.position);
-  const height = carto.height;
-
-  const {
-    scale = 0.2,
-    minStep = 50,
-    minHeight = 10,
-    maxStep = 1e6,
-    duration = 0.6
-  } = opts;
-
-  // Prevent zooming below minHeight
-  if (height <= minHeight) return;
-
-  const step = computeStep(height, { scale, minStep, maxStep, minHeight });
-  if (step <= 0) return;
-
-  // Compute new height, clamped to minHeight
-  const newHeight = Math.max(minHeight, height - step);
-
-  // Keep same lat/lon, only adjust height
-  const destCarto = {
-    longitude: carto.longitude,
-    latitude: carto.latitude,
-    height: newHeight
-  };
-
-  const destination = ellipsoid.cartographicToCartesian(destCarto);
-
-  // Smooth animated zoom
-  camera.flyTo({
-    destination,
-    duration
-  });
-}
-
-/**
- * Optional default export if you want a bundled API:
- *
- * export default {
- *   zoomIn,
- *   zoomOut,
- *   flyZoomIn,
- *   goHome
- * };
- */

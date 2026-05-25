@@ -23,6 +23,7 @@
 
 .menu-row:hover {
   background-color: #ebebeb;
+  border-radius: 4px;
 }
 
 /* Close button positioned absolutely in the top-right corner */
@@ -119,6 +120,7 @@
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
+  border-radius: 4px;
 }
 
 .slider:before {
@@ -131,6 +133,7 @@
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
+  border-radius: 2px;
 }
 
 input:checked + .slider {

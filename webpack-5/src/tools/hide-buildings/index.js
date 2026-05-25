@@ -32,15 +32,7 @@ export default function initHideBuildings(panel, viewer) {
   panel.appendChild(body);
 
   // ------------------------------------------------------------
-  // 3) Instruction text
-  // ------------------------------------------------------------
-  const instructions = document.createElement("div");
-  instructions.className = "tool-instructions";
-  instructions.textContent = "Mittenklicka (mus-skrollen) på byggnader för att gömma dem";
-  body.appendChild(instructions);
-
-  // ------------------------------------------------------------
-  // 4) Restore button (initially disabled)
+  // 3) Restore button (initially disabled)
   // ------------------------------------------------------------
   const restoreBtn = document.createElement("button");
   restoreBtn.className = "tool-button";
@@ -50,7 +42,7 @@ export default function initHideBuildings(panel, viewer) {
   body.appendChild(restoreBtn);
 
   // ------------------------------------------------------------
-  // 5) Counter showing how many buildings are hidden
+  // 4) Counter showing how many buildings are hidden
   // ------------------------------------------------------------
   const counter = document.createElement("div");
   counter.className = "tool-counter";
@@ -76,7 +68,7 @@ export default function initHideBuildings(panel, viewer) {
   }
 
   // ------------------------------------------------------------
-  // 6) Middle‑click to hide buildings
+  // 5) Middle‑click to hide buildings
   // ------------------------------------------------------------
   const handler = new ScreenSpaceEventHandler(viewer.canvas);
 
@@ -99,7 +91,7 @@ export default function initHideBuildings(panel, viewer) {
   }, ScreenSpaceEventType.MIDDLE_CLICK);
 
   // ------------------------------------------------------------
-  // 7) Restore all hidden buildings
+  // 6) Restore all hidden buildings
   // ------------------------------------------------------------
   restoreBtn.addEventListener("click", () => {
     hiddenFeatures.forEach(f => (f.show = true));

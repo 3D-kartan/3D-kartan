@@ -14,12 +14,15 @@ body,
     display: none !important;
 }
 
+:root {
+  --tools-headers-color: #a3d9ff; /* Default: #a3d9ff  */
+  --button-color: #ffffff; /* Default: #ffffff */
+}
+
 * {
   touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  -webkit-touch-callout: none;    
-  --button-color: #ffffff; 
+  -webkit-touch-callout: none;
 }
-

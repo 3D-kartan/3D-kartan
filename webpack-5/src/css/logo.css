@@ -1,0 +1,31 @@
+/* Base logo styling */
+.app-logo {
+  position: absolute;
+  z-index: 999;
+  width: 120px;
+  height: auto;
+  pointer-events: none; /* logo should not block UI */
+  opacity: 0.95;
+}
+
+/* Bottom-middle default position */
+.logo-bottom-middle {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: bottom 0.2s ease;
+}
+
+/* When coordinates are toggled on */
+.logo-bottom-middle.logo-shift-up {
+  bottom: 35px; /* 20px higher */
+}
+
+
+/* Place logo in the top left corner of the menuBox */
+.logo-in-menu {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}

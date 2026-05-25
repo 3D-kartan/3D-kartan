@@ -1,0 +1,146 @@
+.cesium-infoBox {
+  position: absolute;
+  z-index: 1000;
+  cursor: move;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  max-height: min(70vh, 520px);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  padding : 0px;
+}
+.cesium-infoBox .cesium-infoBox-title {
+    background-color: rgb(221, 221, 221);
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    font-weight: bold;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 5px 40px 5px 40px;
+    white-space: normal;  
+    height: auto;   /* allow wrapping */
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.2;
+}
+.cesium-infoBox .cesium-infoBox-close, .cesium-infoBox .infobox-minimize-btn {
+    background-color: rgba(255, 255, 255, 1);
+    color: #000000;
+    height: 30px;
+    width: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+}
+.cesium-infoBox .cesium-infoBox-close:active, .cesium-infoBox .infobox-minimize-btn:active, .cesium-infoBox .cesium-infoBox-close:focus {
+    background-color: rgba(255, 255, 255, 1) !important;
+}
+.cesium-infoBox .cesium-infoBox-camera {
+    display: none;
+}
+.cesium-infoBox,
+.cesium-infoBox * {
+  touch-action: none;           
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+/* Mobile tweaks */
+@media (max-width: 640px) {
+  .cesium-infoBox {
+    width: clamp(320px, 60vw, 520px);
+    max-width: 64vw;
+    max-height: 40vh;
+    z-index: 9999 !important; /* ensure above mobile UI elements */
+  }
+}
+/* Allow scrolling on mobile inside the InfoBox content */
+
+/* Disable pinch/zoom + pan on the drag/title area */
+.cesium-infoBox .cesium-infoBox-title,
+.cesium-infoBox .cesium-infoBox-header {
+  touch-action: none;
+}
+
+/* Allow vertical scrolling inside the description area */
+.cesium-infoBox .cesium-infoBox-description {
+  touch-action: pan-y;
+}
+.cesium-infoBox,
+.cesium-infoBox-iframe,
+.cesium-infoBox-body,
+.cesium-infoBox-description {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Make title a positioning context for the button */
+.cesium-infoBox .cesium-infoBox-title {
+  position: relative;
+ /*  padding-left: 2.2em;  *//* space for left button */
+}
+
+/* Larger tap target + no sticky hover on touch devices */
+.cesium-infoBox .infobox-minimize-btn {
+  /* keep your positioning */
+  position: absolute;
+  left: 6px;
+  top: 5px;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+
+  /* reduce mobile "sticky hover"/highlight effects */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Keep icon size smaller than the tap target */
+.cesium-infoBox .infobox-minimize-btn::before {
+  content: "";
+  width: 30px;
+  height: 30px;
+  display: block;
+
+  background-color: #000;
+  -webkit-mask: var(--black-icon-arrow-dropup) no-repeat center / contain;
+  mask: var(--black-icon-arrow-dropup) no-repeat center / contain;
+}
+
+
+/* If Safari leaves focus ring/background after tap, clear it */
+.cesium-infoBox .infobox-minimize-btn:focus,
+.cesium-infoBox .infobox-minimize-btn:focus-visible {
+  outline: none;
+  background-color: transparent;
+}
+
+/* When minimized, swap icon to dropdown */
+.cesium-infoBox.is-minimized .infobox-minimize-btn::before {
+  -webkit-mask: var(--black-icon-arrow-dropdown) no-repeat center / contain;
+  mask: var(--black-icon-arrow-dropdown) no-repeat center / contain;
+}
+/* Actually minimize: hide the InfoBox content area (robust for Cesium DOM) */
+.cesium-infoBox.is-minimized .cesium-infoBox-body,
+.cesium-infoBox.is-minimized .cesium-infoBox-iframe,
+.cesium-infoBox.is-minimized .cesium-infoBox-description {
+  display: none !important;
+}
+
+/* Optional: keep the panel height tight when minimized */
+.cesium-infoBox.is-minimized {
+  max-height: none;
+}
+
+.cesium-infoBox.is-minimized,.cesium-infoBox.cesium-infoBox.is-minimized .cesium-infoBox-title {
+  border-radius: 5px;
+}
+
+.cesium-infoBox-close:hover {
+background: #fff !important;
+}

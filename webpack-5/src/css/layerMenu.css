@@ -8,6 +8,13 @@
   bottom: 10px;
   z-index: 1000;
 }
+#layerMenu * {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+}
 
 /* Menu button */
 #layerMenuButton {
@@ -173,6 +180,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -225,6 +233,7 @@
 .info-panel {
   display: none;
   margin-left: 22px;
+  margin-right: 10px;
   margin-top: 4px;
   padding: 8px;
   background: #fafafa;
@@ -338,3 +347,24 @@
 
 }
 
+/* Optional if you want to style group headers */
+/* .group-header-level-1 {
+  background-color: #AEB8D4;
+}
+
+.group-header-level-2 {
+  background-color: #C7D9D6;
+}
+
+.group-header-level-3 {
+  background-color: #DCE6D5;
+} */
+
+/*.group-content.open {
+   padding: 0.5rem 0.75rem 0.75rem 1rem; 
+   border-bottom: 1px solid #ccc; 
+   background: rgba(0, 0, 0, 0.02); 
+}*/
+/* .group-header {
+  border-bottom: 1px solid #ccc;
+} */

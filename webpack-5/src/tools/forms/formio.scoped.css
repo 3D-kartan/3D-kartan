@@ -1,0 +1,2 @@
+/* Import formio via css-loader */
+@import "@formio/js/dist/formio.full.min.css";

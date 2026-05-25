@@ -6,6 +6,20 @@
   flex-direction: column;
   gap: 8px;
   z-index: 1100;
+  touch-action: none;           
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Split to columns when screen height is low */
+@media (max-height: 650px) {
+  #toolbar {
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: calc(100vh - 100px);
+    width: max-content;
+  }
 }
 #toolbar .hidden {
   display: none;
@@ -69,11 +83,15 @@
   border-radius: 4px;
   padding: 10px;
   z-index: 1000;
+  max-height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .panel-header {
   cursor: move;
-  background: #a3d9ff;
+  background: var(--tools-headers-color);
   padding: 8px;
   font-weight: bold;
   user-select: none;
@@ -92,6 +110,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: none;           
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 .info-overlay.hidden {
   display: none; /* hidden overlay + popup */
@@ -166,3 +188,52 @@
   z-index: 1200;
   position: relative;
 }
+.panel-body  {
+  flex: 1 1 auto;
+  min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    touch-action: pan-y;           
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+/* Override for just the close button *//* button box */
+.panel-close.tool-button::before,
+.panel-close.tool-button::after,
+.panel-minimize.tool-button::before,
+.panel-minimize.tool-button::after,
+.panel-help.tool-button::before,
+.panel-help.tool-button::after {
+  width: 28px;     
+  height: 28px;
+}
+ /* icon size */
+.panel-close.tool-button::after,
+.panel-minimize.tool-button::after,
+.panel-help.tool-button::after {
+  background-size: 20px 20px; 
+}
+.panel-close.tool-button {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  cursor: pointer;
+}
+
+.panel-minimize.tool-button {
+  position: absolute;
+  top: 10px;
+  right: 50px; /* 11px + (button width ~36px) + spacing */
+  /* --button-color: #666; */ /* optional */
+}
+
+/* TOOL INSTRUCTIONS */
+
+.panel-help.tool-button {
+  position: absolute;
+  top: 10px;
+  right: 88px;
+  cursor: pointer;
+}
+

@@ -304,7 +304,7 @@ export default function initDraw3D(panel, viewer) {
   // Auto-stop drawing if the panel is hidden
   // ------------------------------------------------------------
   const mo = new MutationObserver(() => {
-    if (panel.style.display !== "block" && isDrawing) {
+    if (getComputedStyle(panel).display === "none" && isDrawing) {
       stopDrawing();
     }
   });

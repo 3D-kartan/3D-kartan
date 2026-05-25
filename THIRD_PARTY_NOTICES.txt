@@ -4,3 +4,19 @@ Third-Party Notices
 This application uses CesiumJS (https://cesium.com).
 CesiumJS is licensed under the Apache License 2.0.
 Full license text is available in ./licenses/CESIUM_LICENSE.txt.
+
+This application uses formiojs (https://github.com/formio/formio.js#readme).
+formiojs is licensed under the MIT License.
+Full license text is available in ./licenses/FORMIOJS_LICENSE.txt.
+
+This application uses bootstrap (https://getbootstrap.com/).
+bootstrap is licensed under the MIT License.
+Full license text is available in ./licenses/BOOTSTRAP_LICENSE.txt.
+
+This application uses chart.js (https://www.chartjs.org/).
+chart.js is licensed under the MIT License.
+Full license text is available in ./licenses/CHARTJS_LICENSE.txt.
+
+This application uses proj4js (https://proj4js.org/).
+proj4js is licensed under the MIT License.
+Full license text is available in ./licenses/PROJ4JS_LICENSE.txt.

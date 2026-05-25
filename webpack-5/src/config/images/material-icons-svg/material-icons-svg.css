@@ -6,9 +6,12 @@
     --white-grey-icon-arrow-right: url("./white-grey-icons/arrow_forward_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-arrow-up: url("./white-grey-icons/arrow_upward_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-arrow-down: url("./white-grey-icons/arrow_downward_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
+    --white-grey-icon-arrow-dropdown: url("./white-grey-icons/arrow_drop_down_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
+    --white-grey-icon-arrow-dropup: url("./white-grey-icons/arrow_drop_up_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
+    --white-grey-icon-arrow-selector-tool: url("./white-grey-icons/arrow_selector_tool_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-bookmarks: url("./white-grey-icons/bookmarks_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-collapse: url("./white-grey-icons/close_fullscreen_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
-    --white-grey-collapse-panel: url("./white-grey-icons/top_panel_close_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
+    --white-grey-icon-collapse-panel: url("./white-grey-icons/top_panel_close_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-close: url("./white-grey-icons/close_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-construction: url("./white-grey-icons/construction_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-cube: url("./white-grey-icons/deployed_code_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
@@ -28,6 +31,7 @@
     --white-grey-icon-more: url("./white-grey-icons/more_horiz_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-navigation: url("./white-grey-icons/navigation_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-open-in-full: url("./white-grey-icons/open_in_full_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
+    --white-grey-icon-open-in-new: url("./white-grey-icons/open_in_new_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-pedestrian: url("./white-grey-icons/streetview_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-pin: url("./white-grey-icons/keep_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
     --white-grey-icon-pin-off: url("./white-grey-icons/keep_off_24dp_E3E3E3_FILL0_wght200_GRAD0_opsz24.svg");
@@ -47,6 +51,9 @@
     --black-icon-arrow-right: url("./black-icons/arrow_forward_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-arrow-up: url("./black-icons/arrow_upward_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-arrow-down: url("./black-icons/arrow_downward_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
+    --black-icon-arrow-dropdown: url("./black-icons/arrow_drop_down_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
+    --black-icon-arrow-dropup: url("./black-icons/arrow_drop_up_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
+    --black-icon-arrow-selector-tool: url("./black-icons/arrow_selector_tool_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-bookmarks: url("./black-icons/bookmark_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-collapse: url("./black-icons/close_fullscreen_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-collapse-panel: url("./black-icons/top_panel_close_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
@@ -69,6 +76,7 @@
     --black-icon-more: url("./black-icons/more_horiz_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-navigation: url("./black-icons/navigation_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-open-in-full: url("./black-icons/open_in_full_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
+    --black-icon-open-in-new: url("./black-icons/open_in_new_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-open-panel: url("./black-icons/top_panel_open_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-pedestrian: url("./black-icons/streetview_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");
     --black-icon-pin: url("./black-icons/keep_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg");

@@ -7,14 +7,34 @@ A 3D map application, aimed to display 3D data in an easy to understand way. Thi
 1. Clone the repo
 2. CD webpack-5
 3. `npm install`
-4. If you wish to use the `placement tool` or the `searchbar` then these has to be pre configured prior to running the build
+4. Pre build configs:
 
-The `searchbar` also requires the `API-server` to be set up to work
+- If you wish to use the `placement tool` you need to configure the models to be used pre build. The `placement tool` requries frontend.
 
-If Cesium ion is gonna be used, proper attribution to Cesium ion has to be present in the model accordingly. The contribution logo needs to be set to `visible` prior to running the build - set under `src/css/main.css`
+- For the `searchbar` you may set the appropriate `apiBaseUrl` in `webpack.config.js`. The searchbar and the backend expects the following columns:
 
+    - td_id
+    - td_adress
+    - td_kommund
+    - Geometry (points in WGS 84)
 
-Then `npm run build` and now the application is built and ready to be hosted.
+    - schema.table setup is expected to be addresses.addresses_p
+
+    The above parameter may be changed to fit your set-up. Future updates will move these configs to the config files for easier set-up.
+    The `searchbar`Requries frontend and backend.
+
+- The `forms tool` require the backend to be set up.
+
+5. Run: `npm run build` and now the application is built and should be ready to be hosted.
+
+6. Configure the `index.json` file.  
+
+---
+
+Important note:
+
+If Cesium ion is gonna be used, proper attribution to Cesium ion has to be present in the model accordingly. The contribution logo needs to be set to `visible` prior to running the build - set under `src/css/main.css`.
+
 
 ---
 
@@ -26,11 +46,11 @@ npm run build
 npm run start:built
 ```
 
-Navigate to `localhost:8080`.
+Navigate to `localhost:4000`.
 
 ### Available scripts
 
-- `npm start` - Runs a webpack build with `webpack.config.js` and starts a development server at `localhost:8080`
+- `npm start` - Runs a webpack build with `webpack.config.js` and starts a development server at `localhost:4000`
 - `npm run build` - Runs a webpack build with `webpack.config.js`
 - `npm run start:built` - Start a small static server using `http-server` to demonstrate hosting the built version
 

@@ -64,7 +64,7 @@ export default function initMeasureHeight(panel, viewer) {
 
   const startBtn = document.createElement("button");
   startBtn.className = "tool-button";
-  startBtn.title = "Starta/avsluta höjdmätning";
+  startBtn.title = "På/av höjdmätning";
   startBtn.style.setProperty("--icon", "var(--black-icon-edit)");
 
   const clearBtn = document.createElement("button");
@@ -266,6 +266,24 @@ export default function initMeasureHeight(panel, viewer) {
         finalizeHeight();
       }
     }, ScreenSpaceEventType.LEFT_CLICK);
+
+    // ESC: undo last temporary point
+    window.addEventListener("keydown", escHandler);
+  }
+
+  // ------------------------------------------------------------
+  // ESC handler: remove last temporary point while drawing
+  // Used to undo the first point before the measurement is finalized
+  // ------------------------------------------------------------
+  function escHandler(evt) {
+    if (evt.key !== "Escape" || !isDrawing) return;
+    if (pts.length === 0) return;
+
+    // Remove last temporary point
+    pts.pop();
+
+    const lastMarker = tempMarkerEnts.pop();
+    if (lastMarker) viewer.entities.remove(lastMarker);
   }
 
   // ------------------------------------------------------------
@@ -274,9 +292,12 @@ export default function initMeasureHeight(panel, viewer) {
   function stopDrawing() {
     isDrawing = false;
     startBtn.style.setProperty("--icon", "var(--black-icon-edit)");
+    resultEl.textContent = "Klicka för att börja mäta";
 
     handler?.destroy();
     handler = null;
+
+    window.removeEventListener("keydown", escHandler);
 
     // Remove temporary markers
     tempMarkerEnts.forEach(m => viewer.entities.remove(m));
@@ -311,7 +332,7 @@ export default function initMeasureHeight(panel, viewer) {
   // Stop drawing if panel is hidden
   // ------------------------------------------------------------
   new MutationObserver(() => {
-    if (panel.style.display !== "block" && isDrawing) {
+    if (getComputedStyle(panel).display === "none" && isDrawing) {
       stopDrawing();
     }
   }).observe(panel, {

@@ -9,9 +9,11 @@ import {
   createWorldTerrainAsync,
   ScreenSpaceEventType,
   ScreenSpaceEventHandler,
-  viewerCesium3DTilesInspectorMixin
+  viewerCesium3DTilesInspectorMixin,
+  EllipsoidTerrainProvider
 } from "cesium";
 
+// JS imports
 import initLayerMenu from "./config/ui/layerMenu";
 import initToolbar from "./config/ui/toolbar";
 import { windowManager } from "./config/ui/windowManager";
@@ -20,6 +22,9 @@ import { initSearchBar } from "./config/ui/searchbar.js";
 import { applyUrlCamera } from "./config/ui/menuFunctions/shareMap/shareMap.js";
 import initProjectMenuUI from "./config/ui/projectMenu.js";
 import { initCopyCoordinates } from "./config/ui/rightClickMenu.js";
+import initLogo from "./config/ui/logo.js"; 
+import { createTilesetClippingManager } from "./config/ui/tilesetClippingManager.js";
+import makeCesiumInfoBoxDraggable from "./config/ui/infoBoxMod.js";
 
 // CSS imports
 import "cesium/Build/Cesium/Widgets/widgets.css";
@@ -27,11 +32,13 @@ import "./css/main.css";
 import "./css/toolbar.css";
 import "./css/layerMenu.css";
 import "./config/images/material-icons-svg/material-icons-svg.css";
-import "./tools/placement/placement.css";
 import "./css/menu.css";
 import "./css/projectMenu.css";
 import "./css/searchbar.css";
 import "./css/rightClickMenu.css";
+import "./css/logo.css";
+import "./css/infoBoxMod.css";
+
 
 async function main() {
 
@@ -118,6 +125,10 @@ async function main() {
         terrainProvider = await CesiumTerrainProvider.fromUrl(terrainCfg.url);
         break;
 
+      case "ellipsoid":
+      terrainProvider = new EllipsoidTerrainProvider();
+      break;
+
       case "world":
       default:
         terrainProvider = await createWorldTerrainAsync();
@@ -146,13 +157,20 @@ async function main() {
   // ------------------------------------------------------------
   // 9) Initialize UI modules
   // ------------------------------------------------------------
-  initMenuUI(viewer, config);               // Top-right menu
-  initProjectMenuUI(viewer, config);        // Bottom-left project menu
-  initSearchBar(viewer, config);            // Address search bar
-  initCopyCoordinates(viewer, config.proj4Defs); // Right-click coordinate menu
-  initLayerMenu(viewer, config);            // Layer menu (left side)
+  const tilesetClipMgr = createTilesetClippingManager(viewer);
+  config.tilesetClipMgr = tilesetClipMgr;
 
-  // Toolbar (measure, draw, placement, terrain-section, etc.)
+  // Initiate projectMenu once and save API for toolbar/pedestrian-mode
+  const projectMenuApi = initProjectMenuUI(viewer, config);
+  config.projectMenuApi = projectMenuApi;
+
+  initMenuUI(viewer, config);               // Top-right menu
+  initSearchBar(viewer, config);            // Address search bar
+  initCopyCoordinates(viewer, config.proj4Defs); // Right-click coordiante menu
+  initLayerMenu(viewer, config);            // Layer menu (left side)
+  initLogo(config);                         // Add logo
+  makeCesiumInfoBoxDraggable(viewer);       // Make the info box draggable
+
   await initToolbar(config, viewer);
 
   // ------------------------------------------------------------
@@ -160,5 +178,4 @@ async function main() {
   // ------------------------------------------------------------
   applyUrlCamera(viewer);
 }
-
 main();

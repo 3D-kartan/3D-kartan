@@ -10,7 +10,7 @@ import {
   Quaternion,
   JulianDate
 } from "cesium";
-
+import "./style.css";
 /**
  * A list of available 3D models the user can place in the scene.
  * Each option contains a label and a hard‑coded model URL.
@@ -395,7 +395,7 @@ export default function initPlacement(panel, viewer) {
   // Auto-stop when panel is hidden
   // ------------------------------------------------------------
   const mo = new MutationObserver(() => {
-    if (panel.style.display !== "block") stop();
+    if (getComputedStyle(panel).display === "none") stop();
   });
   mo.observe(panel, { attributes: true, attributeFilter: ["style"] });
 

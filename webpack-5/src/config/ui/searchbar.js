@@ -23,6 +23,13 @@ import {
  * @param {Viewer} viewer - Cesium Viewer instance
  * @param {Object} config - Loaded index.json configuration
  */
+
+// Base URL injected at build time through webpack DefinePlugin.
+// Example:
+//   development -> http://localhost:4001
+//   production  -> https://...
+const apiBaseUrl = API_BASE_URL;
+
 export function initSearchBar(viewer, config) {
   const sbCfg = config.searchbar?.[0];
   if (!sbCfg || !sbCfg.active) {
@@ -164,7 +171,7 @@ export function initSearchBar(viewer, config) {
     if (!q) return;
 
     // Fetch suggestions from your API
-    fetch(`https://3dkartan.vdmb.se/api/adresser?q=${encodeURIComponent(q)}`)
+    fetch(`${apiBaseUrl}/3d-kartan/backend/addresses?q=${encodeURIComponent(q)}`)
       .then(res => res.json())
       .then(geojson => {
         if (!geojson.features) {
