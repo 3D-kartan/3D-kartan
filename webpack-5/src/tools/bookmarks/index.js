@@ -118,7 +118,7 @@ export default function initBookmarks(panel, viewer, toolConfig = {}) {
       const ori = loc?.orientation || {};
       viewer.camera.flyTo({
         destination,
-        duration: 1.2,
+        duration: 3.0,
         orientation: {
         heading: Math.toRadians(ori.heading ?? 0),
         pitch: Math.toRadians(ori.pitch ?? -90),

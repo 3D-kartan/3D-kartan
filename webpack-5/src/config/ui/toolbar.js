@@ -33,6 +33,11 @@ export default async function initToolbar(config, viewer) {
     "terrain-section",
   ];
 
+  const toolbarItems = Array.isArray(config.toolbar) ? config.toolbar : [];
+  if (!Array.isArray(config.toolbar)) {
+    console.warn('No valid "toolbar" array found in index.json.');
+  }
+
   const toolbarEl = document.getElementById("toolbar");
   if (!toolbarEl) return;
 
@@ -42,8 +47,8 @@ export default async function initToolbar(config, viewer) {
   const exclusiveApis = {};
 
   // Loop through all tools defined in config
-  for (const tool of config.toolbar) {
-    if (!tool.active) continue;
+  for (const tool of toolbarItems) {
+    if (!tool?.active) continue;
 
     // Skip certain tools on mobile
     if (isMobile && mobileExcludedTools.includes(tool.toolName)) {

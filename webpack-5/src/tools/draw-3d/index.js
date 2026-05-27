@@ -7,9 +7,11 @@ import {
   CallbackProperty,
   PolygonHierarchy,
   Cartographic,
+  Cartesian3,
   Color,
   HeightReference,
-  ShadowMode
+  ShadowMode,
+  sampleTerrainMostDetailed
 } from "cesium";
 import "./style.css";
 
@@ -132,25 +134,49 @@ export default function initDraw3D(panel, viewer) {
 
   // ------------------------------------------------------------
   // Helper: create the final extruded 3D polygon
+  // We create a 3D polygon with a flat floor and a flat roof.
+  // This means it's possible to create a "bridge" like polygon over a valley.
   // ------------------------------------------------------------
-  function extrudePolygon(positions) {
-    // Convert to Cartographic to determine ground height
-    const cartes = positions.map(p => Cartographic.fromCartesian(p));
-    const minH = Math.min(...cartes.map(c => c.height));
+  async function extrudePolygon(positions) {
+    const cartographics = positions.map((p) => Cartographic.fromCartesian(p));
+
+    // Sample the actual terrain heights for each corner
+    const sampled = await sampleTerrainMostDetailed(
+      viewer.terrainProvider,
+      cartographics
+    );
+
+    const heights = sampled.map((c) => c.height);
+    const minH = Math.min(...heights);
     const extra = parseFloat(heightInput.value) || 0;
+    const roofHeight = minH + extra;
+
+    // Rebuild positions so the polygon base uses sampled terrain heights
+    const flatBasePositions = sampled.map((c) =>
+      Cartesian3.fromRadians(c.longitude, c.latitude, minH)
+    );
 
     const e = viewer.entities.add({
       polygon: {
-        hierarchy: positions,
-        extrudedHeight: minH + extra,
+        hierarchy: new PolygonHierarchy(flatBasePositions),
+        height: minH,
+        extrudedHeight: roofHeight,
         material: Color.GREY.withAlpha(0.7),
-        heightReference: HeightReference.RELATIVE_TO_GROUND,
         shadows: ShadowMode.ENABLED
       },
       is3dPolygon: true
     });
 
     drawnPolygons.push(e);
+  }
+  
+  // ------------------------------------------------------------
+  // Helper: pick a position on the terrain
+  // ------------------------------------------------------------
+  function pickTerrainPosition(windowPosition) {
+    const ray = viewer.camera.getPickRay(windowPosition);
+    if (!defined(ray)) return undefined;
+    return viewer.scene.globe.pick(ray, viewer.scene);
   }
 
   // ------------------------------------------------------------
@@ -169,7 +195,7 @@ export default function initDraw3D(panel, viewer) {
 
     // LEFT_CLICK: add a vertex
     drawingHandler.setInputAction(evt => {
-      const pos = viewer.scene.pickPosition(evt.position);
+      const pos = pickTerrainPosition(evt.position);
       if (!defined(pos)) return;
 
       // First point initializes the floating preview
@@ -192,7 +218,7 @@ export default function initDraw3D(panel, viewer) {
     drawingHandler.setInputAction(evt => {
       if (!floatingPoint) return;
 
-      const pos = viewer.scene.pickPosition(evt.endPosition);
+      const pos = pickTerrainPosition(evt.endPosition);
       if (!defined(pos)) return;
 
       floatingPoint.position.setValue(pos);
@@ -203,7 +229,7 @@ export default function initDraw3D(panel, viewer) {
     }, ScreenSpaceEventType.MOUSE_MOVE);
 
     // LEFT_DOUBLE_CLICK: finalize polygon
-    drawingHandler.setInputAction(() => {
+   drawingHandler.setInputAction(async () => {
       if (activeShapePoints.length < 3) return;
 
       // Remove floating preview point
@@ -223,10 +249,12 @@ export default function initDraw3D(panel, viewer) {
       createdPoints.forEach(pt => viewer.entities.remove(pt));
       createdPoints.length = 0;
 
-      // Create final extruded polygon
-      extrudePolygon(activeShapePoints);
-
+      // Use a copy before clearing
+      const finalPositions = activeShapePoints.slice();
       activeShapePoints = [];
+
+      // Create final extruded polygon
+      await extrudePolygon(finalPositions);
     }, ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
     // ESC: undo last point
