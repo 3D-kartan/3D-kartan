@@ -39,19 +39,17 @@ export default async function initLogo(config) {
 
   if (!useLogo || !logoName) return;
 
-  let logoSrc;
-
-  try {
-    logoSrc = (await import(`@imgs/png/${logoName}`)).default;
-  } catch (e) {
-    console.warn("Logo file not found:", logoName, e);
-    return;
-  }
-
   const img = document.createElement("img");
+  const logoSrc = new URL(`images/png/${encodeURIComponent(logoName)}`, document.baseURI).href;
+
   img.src = logoSrc;
   img.alt = "Application Logo";
   img.className = "app-logo";
+
+  img.onerror = () => {
+    console.warn("Logo file not found:", logoName, logoSrc);
+    img.remove();
+  };
 
   // ---------------------------------------------
   // TOP-RIGHT-MENU PLACEMENT

@@ -13,7 +13,6 @@ A 3D map application, aimed to display 3D data in an easy to understand way. Thi
 
 - For the `searchbar` you may set the appropriate `apiBaseUrl` in `webpack.config.js`. The searchbar and the backend expects the following columns:
 
-    - td_id
     - td_adress
     - td_kommund
     - Geometry (points in WGS 84)
