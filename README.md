@@ -55,7 +55,7 @@ Navigate to `localhost:4000`.
 
 ## Documentation
 
-More documentation is being developed, check out the docs hosted here: INSERT LINK WHEN DOCS IS FINISHED.
+More documentation is being developed, check out the docs hosted here: [3D-kartan Documentation](https://3d-kartan.github.io/3D-kartan-documentation/)
 
 ---
 
