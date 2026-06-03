@@ -50,13 +50,19 @@
       "terrainType": "world"  
     }
   ],
+   "logo": [
+    {
+      "useLogo": false,
+      "logoName": "logo.png",
+      "logoLocation": "top-right-menu"
+    }
+  ],
   "toolbar": [
   {
     "toolName":   "info",
     "toolTip":    "Information",
     "iconVar":    "--black-icon-info",
     "actionType": "popup",
-    "showNavigationImg": true,
     "popupText":  "Höjderna i modellen är indikativa eftersom terrängen är något förenklad och bör inte användas i beslut där hög noggranhet krävs. Har du ett ärende som kräver höjdberäkning med hög noggranhet? Kontaka Kart & Mät på enhetsmailen@exempel.se",
     "active":     true
   },
@@ -87,6 +93,43 @@
     "iconVar": "--black-icon-home",
     "actionType": "goHome",
     "active": true
+  },
+  {
+    "toolName": "forms",
+    "toolTip": "Öppna formulärvy",
+    "iconVar": "--black-icon-share",
+    "active": true,
+    "forms": [
+      { "name": "Trygghetsformulär", "id": "form-id-string" },
+      { "name": "Återvinningsformulär", "id": "form-id-string" },
+      { "name": "Reparationsformulär", "id": "form-id-string" }
+    ]
+  },
+  {
+    "toolName": "bookmarks",
+    "toolTip": "Öppna snabbzooms bokmärken",
+    "iconVar": "--black-icon-bookmarks",
+    "active": true,
+    "locations":[
+      {
+        "name": "Tumba",
+        "position": 
+          {
+            "lng": 17.864741,
+            "lat": 59.198933,
+            "height": 900
+          }
+      },
+      {
+        "name": "Tullinge",
+        "position": 
+          {
+            "lng": 17.886863,
+            "lat": 59.200208,
+            "height": 800
+          }
+      }
+    ]
   },
   {
     "toolName": "sun-study",
