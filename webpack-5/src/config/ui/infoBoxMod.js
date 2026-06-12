@@ -244,6 +244,7 @@ export default function makeCesiumInfoBoxDraggable(viewer) {
       style.textContent = `
         table {
           width: 100%;
+          table-layout: fixed; /* enforce column widths so long text can't stretch the table */
           border-collapse: collapse;
           font-size: 13px;
         }
@@ -275,6 +276,9 @@ export default function makeCesiumInfoBoxDraggable(viewer) {
           vertical-align: top;
           background: rgba(255, 255, 255, 1) !important;
           color: #000000;
+          overflow-wrap: break-word;
+          word-break: break-word;
+          overflow: hidden;
         }
         tr td:first-child {
         width: 40%;
