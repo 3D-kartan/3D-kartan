@@ -23,7 +23,8 @@ import {
   ClippingPolygonCollection,
   Matrix4,
   Transforms,
-  HeadingPitchRange
+  HeadingPitchRange,
+  Cartographic
 } from "cesium";
 
 import {
@@ -410,6 +411,16 @@ function updateTilesetClippingToggleUI() {
       }
     }
     return null;
+  }
+
+  // --- Height offset for 3D tilesets ---
+  function applyHeightOffsetToTileset(tileset, heightOffset) {
+    if (!Number.isFinite(heightOffset) || heightOffset === 0) return;
+    const cartographic = Cartographic.fromCartesian(tileset.boundingSphere.center);
+    const surface = Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
+    const offsetPos = Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, heightOffset);
+    const translation = Cartesian3.subtract(offsetPos, surface, new Cartesian3());
+    tileset.modelMatrix = Matrix4.fromTranslation(translation);
   }
 
   // --- Fly to project start ---
@@ -882,6 +893,7 @@ function flyCameraToLockedProjectPose(project, opts = {}) {
               }
 
               viewer.scene.primitives.add(tsObj);
+              applyHeightOffsetToTileset(tsObj, layer.heightOffset ?? 0);
               tsObj.style = new Cesium3DTileStyle({
                 color: `color('white', ${opacity})`
               });
@@ -1058,6 +1070,7 @@ async function openProjectSidebar(projectIndex) {
           }
 
           viewer.scene.primitives.add(tsObj);
+          applyHeightOffsetToTileset(tsObj, layer.heightOffset ?? 0);
           tsObj.style = new Cesium3DTileStyle({
             color: `color('white', ${opacity})`
           });
