@@ -226,64 +226,81 @@ export default async function initToolbar(config, viewer) {
     // GENERIC TOOLS (draw-3d, placement, terrain-section, hide-buildings, etc.)
     // ------------------------------------------------------------
     {
+      // The name is used to build an import path, so only accept
+      // plain tool folder names.
+      if (!/^[a-z0-9-]+$/.test(String(tool.toolName))) {
+        console.error(`Invalid toolName in index.json: "${tool.toolName}"`);
+        btn.remove();
+        continue;
+      }
+
       const panel = document.createElement("div");
       panel.className = "tool-panel";
       panel.id = `panel-${tool.toolName}`;
       panel.style.display = "none";
       document.body.appendChild(panel);
 
-      // Dynamic import based on tool name
-      const { default: initTool } = await import(
-        /* webpackChunkName: "[request]" */
-        `@tools/${tool.toolName}/index.js`
-      );
+      try {
+        // Dynamic import based on tool name
+        const { default: initTool } = await import(
+          /* webpackChunkName: "[request]" */
+          `@tools/${tool.toolName}/index.js`
+        );
 
-      let api;
+        const toolsUsingToolConfig = new Set([
+          "bookmarks",
+          "forms",
+          "placement"
+        ]);
 
-      const toolsUsingToolConfig = new Set(["bookmarks", "forms"]);
+        const api = toolsUsingToolConfig.has(tool.toolName)
+          ? initTool(panel, viewer, tool)
+          : initTool(panel, viewer, config.proj4Defs);
 
-      api = toolsUsingToolConfig.has(tool.toolName)
-        ? initTool(panel, viewer, tool)
-        : initTool(panel, viewer, config.proj4Defs);
+        // Add close button to the panel header (top-right)
+        ensurePanelHeaderButtons(panel, api, {
+          toolName: tool.toolName,
+          toolTitle: tool.toolTip,
+        });
 
-      // Add close button to the panel header (top-right)
-      ensurePanelHeaderButtons(panel, api, {
-        toolName: tool.toolName,
-        toolTitle: tool.toolTip,
-      });
-
-      // Register exclusive tools
-      if (exclusiveTools.includes(tool.toolName)) {
-        exclusivePanels[tool.toolName] = panel;
-        exclusiveApis[tool.toolName] = api;
-      }
-
-      const header = panel.querySelector(".panel-header");
-      if (header) windowManager.makeDraggable(panel, header);
-
-      btn.addEventListener("click", async () => {
-        const open = panel.style.display === "flex";
-
-        if (!open) {
-          if (exclusiveTools.includes(tool.toolName)) {
-            await closeOtherExclusive(
-              tool.toolName,
-              exclusiveTools,
-              exclusivePanels,
-              exclusiveApis
-            );
-          }
-          panel.style.display = "flex";
-          windowManager.bringToFront(panel);
-
-          requestAnimationFrame(() => {
-            windowManager.keepInViewport(panel);
-          });
-        } else {
-          await safeStop(api);
-          panel.style.display = "none";
+        // Register exclusive tools
+        if (exclusiveTools.includes(tool.toolName)) {
+          exclusivePanels[tool.toolName] = panel;
+          exclusiveApis[tool.toolName] = api;
         }
-      });
+
+        const header = panel.querySelector(".panel-header");
+        if (header) windowManager.makeDraggable(panel, header);
+
+        btn.addEventListener("click", async () => {
+          const open = panel.style.display === "flex";
+
+          if (!open) {
+            if (exclusiveTools.includes(tool.toolName)) {
+              await closeOtherExclusive(
+                tool.toolName,
+                exclusiveTools,
+                exclusivePanels,
+                exclusiveApis
+              );
+            }
+            panel.style.display = "flex";
+            windowManager.bringToFront(panel);
+
+            requestAnimationFrame(() => {
+              windowManager.keepInViewport(panel);
+            });
+          } else {
+            await safeStop(api);
+            panel.style.display = "none";
+          }
+        });
+      } catch (error) {
+        // One broken tool must not prevent the remaining tools from loading.
+        console.error(`Failed to load tool "${tool.toolName}":`, error);
+        panel.remove();
+        btn.remove();
+      }
     }
   }
 }

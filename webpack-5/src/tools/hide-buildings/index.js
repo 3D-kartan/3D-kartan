@@ -73,8 +73,8 @@ export default function initHideBuildings(panel, viewer) {
   const handler = new ScreenSpaceEventHandler(viewer.canvas);
 
   handler.setInputAction(movement => {
-    // Only active when the panel is visible
-    if (panel.style.display !== "block") return;
+    // Only active when the panel is visible, fix, the panel is flex not block
+    if (panel.style.display !== "flex") return;
 
     const picked = scene.pick(movement.position);
     if (!defined(picked) || picked.show === false) return;

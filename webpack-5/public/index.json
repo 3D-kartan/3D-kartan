@@ -34,6 +34,13 @@
       "label": "SWEREF 99 TM" 
     }
   ],
+  "displayed-coordinate-precision": [
+    {
+      "E": 3,
+      "N": 3,
+      "Z": 1
+    }
+  ],
   "searchbar" : [ 
     { 
       "active" : false
@@ -47,7 +54,7 @@
   ],
   "terrain": [
     {
-      "terrainType": "world"  
+      "terrainType": "ellipsoid"  
     }
   ],
    "logo": [
@@ -167,7 +174,21 @@
     "toolTip":    "Placera 3D-modeller",
     "iconVar":    "--black-icon-place-model",
     "actionType": "panel",
-    "active":     false
+    "active":     true,
+    "models": [
+      {
+        "id": "building_1",
+        "label": "Byggnad_1",
+        "src": "models/building_1/building_1.glb",
+        "heightM": 5
+      },
+      {
+        "id": "building_2",
+        "label": "Byggnad_2",
+        "src": "models/building_2/building_2.glb"
+      }
+    ],
+    "allow-local-objects": true
   },
   {
     "toolName":   "terrain-section",

@@ -15,8 +15,14 @@ export const TOOL_INSTRUCTIONS = {
     <p>Det går att ångra utsatta punkter innan färdigställt mått genom att klicka på "esc" på tangentbordet.</p>
   `,
   placement: `
-    <h3>Placera objekt</h3>
     <p>Välj modell och klicka i kartan för att placera.</p>
+    <p>Om import av egna modeller är tillåtet av administratören stöds förljande två format:</p>
+    <ul>
+      <li>.glTF</li>
+      <li>.glb</li>
+    </ul>
+    <p>.gltf filer som referera till externa filer <b>tillåts inte</b>.</p>
+    <p>Spara placering sparar de placerade objekten lokalt i minnet.</p>
   `,
   bookmarks: `
     <p>Klicka på ett bokmärke för att zooma till det området.</p>

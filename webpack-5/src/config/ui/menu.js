@@ -154,7 +154,11 @@ export default function initMenuUI(viewer, config) {
       .addEventListener("change", e => {
         if (e.target.checked) {
           // Start coordinate display tool
-          teardownCoords = initCoordinates(viewer, config.proj4Defs);
+          teardownCoords = initCoordinates(
+            viewer,
+            config.proj4Defs,
+            config["displayed-coordinate-precision"]?.[0]
+          );
         } else if (teardownCoords) {
           // Stop coordinate display tool
           teardownCoords();

@@ -13,7 +13,7 @@
 }
 
 /* Split to columns when screen height is low */
-@media (max-height: 650px) {
+@media (max-height: 750px) {
   #toolbar {
     flex-wrap: wrap;
     align-content: flex-start;
@@ -75,7 +75,7 @@
 .tool-panel {
   position: absolute;
   top: 60px; /* Initial position */
-  left: 60px; /* Initial position */
+  left: 100px; /* Initial position */
   width: 300px;
   background: #f9f9f9;
   border: 1px solid #ccc;
@@ -90,9 +90,10 @@
 }
 
 .panel-header {
+  position: relative;
   cursor: move;
   background: var(--tools-headers-color);
-  padding: 8px;
+  padding: 8px 120px 8px 8px; /* reserve space for control buttons */
   font-weight: bold;
   user-select: none;
   border-radius: 4px;
@@ -188,15 +189,43 @@
   z-index: 1200;
   position: relative;
 }
-.panel-body  {
+.panel-body {
   flex: 1 1 auto;
+  min-width: 0;
   min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    touch-action: pan-y;           
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Placement tool button rows */
+.row-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+ * Two equally sized buttons per row.
+ * Additional buttons automatically continue on the next row.
+ */
+.row-buttons > button {
+  flex: 1 1 calc(33.333% - 4px);
+  min-width: 0;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 /* Override for just the close button *//* button box */
 .panel-close.tool-button::before,
@@ -214,17 +243,24 @@
 .panel-help.tool-button::after {
   background-size: 20px 20px; 
 }
+/* Automatic positioning for panel buttons */
+.panel-close.tool-button,
+.panel-minimize.tool-button,
+.panel-help.tool-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .panel-close.tool-button {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  right: 0px;
   cursor: pointer;
 }
 
 .panel-minimize.tool-button {
   position: absolute;
-  top: 10px;
-  right: 50px; /* 11px + (button width ~36px) + spacing */
+  right: 38px;
   /* --button-color: #666; */ /* optional */
 }
 
@@ -232,8 +268,7 @@
 
 .panel-help.tool-button {
   position: absolute;
-  top: 10px;
-  right: 88px;
+  right: 76px;
   cursor: pointer;
 }
 

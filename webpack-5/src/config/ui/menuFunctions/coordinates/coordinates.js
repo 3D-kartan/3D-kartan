@@ -8,6 +8,7 @@ import {
   sampleTerrainMostDetailed
 } from "cesium";
 import "./coordinates.css";
+import { normalizePrecision } from "./precision.js";
 
 /**
  * Initializes a live coordinate display that updates as the user moves
@@ -22,10 +23,18 @@ import "./coordinates.css";
  *
  * @param {Viewer} viewer        - The Cesium Viewer instance
  * @param {Array} defsArray      - Array of CRS definitions: [{ code, alias, projection }]
+ * @param {object} [precision]   - Decimals to display: { E, N, Z } (integers 0-10)
  * @param {string} [containerId] - ID of the Cesium container element
  * @returns {Function}           - A teardown callback that removes the feature
  */
-export function initCoordinates(viewer, defsArray, containerId = "cesiumContainer") {
+export function initCoordinates(
+  viewer,
+  defsArray,
+  precision = {},
+  containerId = "cesiumContainer"
+) {
+  const decimals = normalizePrecision(precision);
+
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
   // Do not enable coordinate display on mobile devices
@@ -84,7 +93,9 @@ export function initCoordinates(viewer, defsArray, containerId = "cesiumContaine
         const target = proj4(defsArray[0].code, defsArray[1].code, [lon, lat]);
 
         coordDiv.textContent =
-          `E: ${target[0].toFixed(3)}, N: ${target[1].toFixed(3)}, H: ${carto.height.toFixed(2)} m`;
+          `E: ${target[0].toFixed(decimals.E)}, ` +
+          `N: ${target[1].toFixed(decimals.N)}, ` +
+          `H: ${carto.height.toFixed(decimals.Z)} m`;
       })
       .catch(err => {
         console.error("Sampling failed:", err);

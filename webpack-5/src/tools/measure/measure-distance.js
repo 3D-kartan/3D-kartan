@@ -768,7 +768,7 @@ export default function initMeasureDistance(panel, viewer) {
 
     highlightSegmentPositions = [];
 
-    resultEl.textContent = "Click to start measuring";
+    resultEl.textContent = "Klicka för att börja mäta";
   }
 
   // ------------------------------------------------------------

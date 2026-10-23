@@ -9,6 +9,7 @@ import {
   VerticalOrigin,
   HeightReference
 } from "cesium";
+import { normalizePrecision } from "./menuFunctions/coordinates/precision.js";
 
 /**
  * Initializes a right‑click context menu that allows the user to copy
@@ -24,9 +25,18 @@ import {
  *
  * @param {Viewer} viewer - Cesium Viewer instance
  * @param {Array} proj4Defs - Array of CRS definitions from config
+ * @param {object} [precision] - Displayed decimals from config. Only Z is
+ *   used here; E/N/lat/lon keep their per-CRS precision.
  * @param {string} containerId - DOM element ID for Cesium container
  */
-export function initCopyCoordinates(viewer, proj4Defs, containerId = "cesiumContainer") {
+export function initCopyCoordinates(
+  viewer,
+  proj4Defs,
+  precision = {},
+  containerId = "cesiumContainer"
+) {
+  const zDecimals = normalizePrecision(precision).Z;
+
   // Only run on desktop devices
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
   if (isMobile) return () => {};
@@ -132,11 +142,11 @@ export function initCopyCoordinates(viewer, proj4Defs, containerId = "cesiumCont
       let text;
       if (def.code === "EPSG:4326") {
         // WGS84: show Lat/Lon
-        text = `${label}: Lat ${lat.toFixed(6)}, Lon ${lon.toFixed(6)}, Z ${carto.height.toFixed(2)}`;
+        text = `${label}: Lat ${lat.toFixed(6)}, Lon ${lon.toFixed(6)}, Z ${carto.height.toFixed(zDecimals)}`;
       } else {
         // Convert to target CRS
         const [E, N] = proj4(proj4Defs[0].code, def.code, [lon, lat]);
-        text = `${label}: E ${E.toFixed(3)}, N ${N.toFixed(3)}, Z ${carto.height.toFixed(2)}`;
+        text = `${label}: E ${E.toFixed(3)}, N ${N.toFixed(3)}, Z ${carto.height.toFixed(zDecimals)}`;
       }
 
       const item = document.createElement("div");

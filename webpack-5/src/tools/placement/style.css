@@ -40,10 +40,6 @@
   margin-bottom: 5px;
 }
 
-#panel-placement .edit-section button {
-  margin-right: 5px;
-}
-
 #panel-placement .panel-body button{
   margin-top: 6px;
   padding: 6px 6px;
@@ -52,4 +48,16 @@
   border: 1px solid #999;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.placement-edit-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.placement-edit-buttons button {
+  flex: 1;
+  min-width: 0;
 }

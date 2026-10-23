@@ -77,7 +77,7 @@ async function main() {
   //    (We attach terrain later using the new Terrain API)
   // ------------------------------------------------------------
   const viewer = new Viewer("cesiumContainer", {
-    terrainProvider: false,  // Important: disable legacy terrain
+    terrainProvider: new EllipsoidTerrainProvider(), // Since 1.146.0 we need set a terrain provider during construction
     timeline: false,
     animation: false,
     projectionPicker: false,
@@ -140,6 +140,13 @@ async function main() {
     terrainProvider = await CesiumTerrainProvider.fromWorldTerrain();
   }
 
+  // Development verification for terrain provider
+  //console.log("Terrain provider:", terrainProvider);
+  //console.log(
+  // "getLevelMaximumGeometricError:",
+  // typeof terrainProvider?.getLevelMaximumGeometricError
+  //);
+
   // ------------------------------------------------------------
   // 7) Apply terrain using the NEW Terrain API
   // ------------------------------------------------------------
@@ -166,7 +173,11 @@ async function main() {
 
   initMenuUI(viewer, config);               // Top-right menu
   initSearchBar(viewer, config);            // Address search bar
-  initCopyCoordinates(viewer, config.proj4Defs); // Right-click coordiante menu
+  initCopyCoordinates(
+    viewer,
+    config.proj4Defs,
+    config["displayed-coordinate-precision"]?.[0]
+  ); // Right-click coordinate menu
   initLayerMenu(viewer, config);            // Layer menu (left side)
   initLogo(config);                         // Add logo
   makeCesiumInfoBoxDraggable(viewer);       // Make the info box draggable
